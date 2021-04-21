@@ -12,16 +12,3 @@ A text file containing a link to the map position you wrangled in your project, 
 An .osm file containing a sample part of the map region you used (around 1 - 10 MB in size). See the notes below.
 A text file containing a list of Web sites, books, forums, blog posts, github repositories etc that you referred to or used in this submission (Add N/A if you did not use such resources).
 Common mistakes and warnings
-
-
-If you've been working on this project through a Jupyter Notebook, make sure that your code is transferred to standalone .py scripts before submitting your work. It is recommended that you have one script for each field that you audit, and one script that converts and cleans your data. Make sure that your code is well-commented and organized so that your reviewer can follow your work.
-Your code should carry out cleaning operations on one of the fields that you investigate. Make sure that you've performed some programmatic cleaning as part of your project work: you don't need to clean all of the problems in your dataset, but you should at least address the most common issues observed.
-Make sure that your scripts carry out the functionality of your cleaning steps. One common mistake is to create scripts that target specific audits of the code, but the audited changes are not actually carried out when the XML data is converted to JSON or CSV for insertion into your chosen database.
-Ready to submit your project?
-Click on the "Submit Project" button, or click on the project from your Udacity Home, and follow the instructions to submit:
-
-If you want to submit your files through a "Link to Project", upload your project files onto Github and send us the link.
-If you instead want to submit your files through "Upload a Zip", compress your project directory, and submit that zip file.
-It can take us up to a week to grade the project, but in most cases it is much faster. You will get an email once your submission has been reviewed.
-
-If you are having any problems submitting your project or wish to check on the status of your submission, please email us at dataanalyst-project@udacity.com.
