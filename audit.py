@@ -2,7 +2,7 @@ import re
 from collections import defaultdict
 import xml.etree.cElementTree as ET
 
-osmfile = 'wlinn'
+osmfile = 'wlinn_sample'
 
 # Setting global variables and values
 street_types = defaultdict(int)
