@@ -1,5 +1,7 @@
 osmfile = 'wlinn_sample'
 
+import xml.etree.cElementTree as ET
+
 expected_values = ['Avenue', 'Alley', 'Road', 'Street', 'Trail', 'Landing', 'Pointe', 
                    'Vista', 'Woods', 'Curve', 'Path', 'Freeway', 'Grotto', 'Court', 
                    'Northbound', 'Southbound', 'Drive', 'Boulevard', 'Lane', 'Circle',
