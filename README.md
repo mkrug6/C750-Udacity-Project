@@ -11,7 +11,7 @@ SQL Commands.txt: list of queries used in this project
 
 link_file.txt: a file containing a link to the target map area
 
-wlinn.rar: Compressed file of the map that is used in this project
+wlinn_sample: sample file used for this project.
 
 schema.py: Schema used to validate the database before writing it in a CSV file.
 
