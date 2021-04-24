@@ -21,4 +21,4 @@ audit.py: the audit functions used in this project
 
 map_cleaning.py: the map cleaning functions used in this project
 
-sample_generator.py: a way to generate a small sample of the original OSM file. Note that this is for demonstration purposes. 
+sample_generator.py: a way to generate a small sample of the original OSM file. Note that this is for demonstration purposes and is not needed for this project. 
