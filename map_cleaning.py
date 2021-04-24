@@ -1,4 +1,4 @@
-osmfile = 'wlinn_sample'
+osmfile = 'wlinn'
 
 import xml.etree.cElementTree as ET
 
