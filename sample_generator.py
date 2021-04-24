@@ -4,7 +4,7 @@
 import xml.etree.ElementTree as ET
 
 OSM_FILE = "wlinn"  # Replace this with your osm file
-SAMPLE_FILE = "wlinn_sample.osm"
+SAMPLE_FILE = "wlinn"
 
 k = 20 # Parameter: take every k-th top level element
 
