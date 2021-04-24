@@ -4,7 +4,7 @@ import re
 
 osmfile = 'wlinn_sample'
 #typo_full_names = {}
-#corrected_names = {}      
+corrected_names = {}      
 street_type_re = re.compile(r'\S+\.?$', re.IGNORECASE)
 expected_values = ['Avenue', 'Alley', 'Road', 'Street', 'Trail', 'Landing', 'Pointe', 'Vista', 'Woods', 'Curve', 'Path', 'Freeway', 'Grotto', 'Court', 'Northbound', 'Southbound', 'Drive', 'Boulevard', 'Lane', 'Circle', 'Highway', 'Place', 'Loop', 'Terrace', 'Way', 'Crest', 'Parkway', 'Point', 'View', 'Commons', 'Run', 'South', 'North', 'East', 'Circus', 'Summit', 'West', '99E', '224', '213', 'View', '212', 'Downs']
 
