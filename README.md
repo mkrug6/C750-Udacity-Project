@@ -1,5 +1,10 @@
 # A case study of data wrangling using the City of West Linn, Oregon with Open Street Map data
 
+# HOW TO RUN AND USE THESE FILES
+1. Download all files and unnzip into a directory of your choice
+2. run 'python your_directory/main.py'
+3. The python scripts will output .csv files in your_directory
+
 
 Recommend opening the Jupyter notebook file for ease of use and readability. The region I chose was West Linn, Oregon, my hometown. The original file was nearly 400 MB and the .ipynb file was written to reflect that. The project explores the City of West Linn, Oregon using the information available in the Open Street Map. The purpose of the project is to use Data Wrangling techniques in Python to load, audit, clean and export an Open Street Map file, for further analysis using SQLite and Python data analysis libraries. 
 
