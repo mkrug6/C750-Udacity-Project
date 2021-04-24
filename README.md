@@ -5,15 +5,20 @@ Recommend opening the Jupyter notebook file for ease of use and readability. The
 
 ## The repository contains the following files:
 
-
-final report.pdf: Final report containing the results of the case study.
-
 C750.ipynb: Jupyter notebook containing the results and the code used to audit, clean, and process the Open Street Map file.
+
+SQL Commands.txt: list of queries used in this project
 
 link_file.txt: a file containing a link to the target map area
 
-sample_city_west linn: A 10 MB example file of the original ~400 MB file
+wlinn.rar: Compressed file of the map that is used in this project
 
 schema.py: Schema used to validate the database before writing it in a CSV file.
 
 report.pdf: PDF document containing answers to rubric questions.
+
+audit.py: the audit functions used in this project
+
+map_cleaning.py: the map cleaning functions used in this project
+
+sample_generator.py: a way to generate a small sample of the original OSM file. Note that this is for demonstration purposes. 
