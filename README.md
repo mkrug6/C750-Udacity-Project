@@ -9,7 +9,7 @@
 
 The .py scripts are written to use the wlinn_sample file. If you wish to use the full file, edit the osmfile variable in config.py to point to the OSM file you wish to use.
 
-The region I chose was West Linn, Oregon, my hometown. The original file was nearly 400 MB and the .ipynb file was written to reflect that. The project explores the City of West Linn, Oregon using the information available in the Open Street Map. The purpose of the project is to use Data Wrangling techniques in Python to load, audit, clean and export an Open Street Map file, for further analysis using SQLite and Python data analysis libraries. 
+The region I chose was West Linn, Oregon, my hometown. The original file was nearly 400 MB and the Report file was written to reflect that. The project explores the City of West Linn, Oregon using the information available in the Open Street Map. The purpose of the project is to use Data Wrangling techniques in Python to load, audit, clean and export an Open Street Map file for analysis using SQLite and Python data analysis libraries. 
 
 ## The repository contains the following files:
 
