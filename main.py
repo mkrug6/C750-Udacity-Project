@@ -1,18 +1,15 @@
 from map_cleaning import *
-from audit import *
+from audit import audit
 from create_csvs import *
-from theschema import *
+from config import *
 import re
 
-mapfile = osmfile
-expression = ""
 
-
-#Runs the main function in audit.py
-audit(mapfile)
+#Runs the audit function in audit.py
+audit(osmfile)
 
 #Runs the main function in map_cleaning.py
-clean_map(mapfile)
+clean_map(osmfile)
 
-#Makes the CSV files
+#Makes the CSV files from create_csvs.py
 process_map(osmfile, validate=False)
