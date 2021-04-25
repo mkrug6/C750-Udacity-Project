@@ -1,38 +1,73 @@
-#The map file to use
-osmfile = "wlinn_sample"
+import re
+from collections import defaultdict
+import xml.etree.cElementTree as ET
+from config import *
 
-#The SQLite database name. Used in createdb.py
-sqlite_file = 'wlinn.db'
+#creates the dictionary street_types for the functions below
+street_types = defaultdict(int)
 
-#Here you can change what you want your CSV files to be named
-NODES_PATH = "nodes.csv"
-NODE_TAGS_PATH = "nodes_tags.csv"
-WAYS_PATH = "ways.csv"
-WAY_NODES_PATH = "ways_nodes.csv"
-WAY_TAGS_PATH = "ways_tags.csv"
+#the regex expression to map against possibly invalid street names
+street_type_re = re.compile(r'\S+\.?$', re.IGNORECASE)
+ 
+def check_street_types(street_types, street_name):
+    
+    """
+    Uses regex search pattern to increment the dictionary
+    street_type up by 1 when a match is found.
+    """
+    
+    m = street_type_re.search(street_name)
+    if m:
+        street_type = m.group()
+        street_types[street_type] += 1
+  
+def is_street_name(elem):
+    
+    """
+    This functions finds the areas where a node has a tag with
+    the value of "addr:street". If that value is found, the function
+    returns true.
+    """
+    
+    return (elem.tag == "tag") and (elem.attrib['k'] == "addr:street")
 
-#If you are using the sample_generator tool, this is where you name the output sample file
-SAMPLE_FILE = "wlinn_sample"
+def check(filename):
+    """
+    The purpose of thsi is to check if there is a match in a nodes' street value
+    against the dictionary of values that was created. If a match is found,
+    it outputs the following:
+        old_value: new_value
+    If a match was found, street_types is returned
+    """
+    
+    for event, elem in ET.iterparse(filename):
+        if is_street_name(elem):
+            check_street_types(street_types, elem.attrib['v'])
+    print(street_types, "%s: %d")
+    return(street_types)
 
-""" It is recommended not to make changes to this. If you do, you must make
-    corresponding changes to the schema table. The order of the fields here
-    and quantity must match the order in the sql scheme table in schema.py.
-"""
-NODE_FIELDS = ['id', 'lat', 'lon', 'user', 'uid', 'version', 'changeset', 'timestamp']
-NODE_TAGS_FIELDS = ['id', 'key', 'value', 'type']
-WAY_FIELDS = ['id', 'user', 'uid', 'version', 'changeset', 'timestamp']
-WAY_TAGS_FIELDS = ['id', 'key', 'value', 'type']
-WAY_NODES_FIELDS = ['id', 'node_id', 'position']
+def audit_street_type(street_types, street_name):
+    
+    """
+    Uses regular expressions to search for specific patterns 
+    found in street_type_re. If it mathces, it increments 
+    the dictionary value up by 1.
+    """
+    
+    m = street_type_re.search(street_name)
+    if m:
+        street_type = m.group()
+        street_types[street_type] += 1
 
-"""
-This is a list of what should be expected to be on the end of the "v" tag for when the node is a street.
-This is used in clean_map() from map_cleaning.py
-If anymore street types exist, please let me know. This is an exhaustive list.
-"""
-expected_values = ['Avenue', 'Alley', 'Road', 'Street', 'Trail', 'Landing', 'Pointe', 'Vista', 'Woods', 'Curve', 'Path', 'Freeway', 'Grotto', 'Court', 'Northbound', 'Southbound', 'Drive', 'Boulevard', 'Lane', 'Circle', 'Highway', 'Place', 'Loop', 'Terrace', 'Way', 'Crest', 'Parkway', 'Point', 'View', 'Commons', 'Run', 'South', 'North', 'East', 'Circus', 'Summit', 'West', '99E', '224', '213', 'View', '212', 'Downs']
+def audit(filename):
 
-"""
-Creates an empy dictionary. This dictionary will be filled by map_cleaning.py
-and will be used to create CSV files with the create_csvs.py file.
-"""
-corrected_names = {} 
+    """
+    This is the main audit function. The purpose of the audit function is to iteratively run 
+    through the OSM file. It starts first by running the every_type function (see above).
+    """
+
+    every_type = check(osmfile)
+    for event, elem in ET.iterparse(filename):
+        if is_street_name(elem):
+            audit_street_type(street_types, elem.attrib['v'])
+    return(street_types)
