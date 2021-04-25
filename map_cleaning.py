@@ -29,6 +29,7 @@ This maps an incorrect abbreviation to its expanded version. This dictionary wil
 to correct errors in the OSM map file.
 """
 
+
 abbr_mapping = {'Ave': 'Avenue',
                 'TRL': 'Trail',
                 'Hwy': 'Highway',
@@ -60,13 +61,18 @@ spelling_fix = {
                 'Pimlico': 'Pimlico Drive',
                 'Hotspur': 'Hotspur Road',
                 'Pericles': 'Pericles Loop',
-                'Polonius': 'Polonius Loop',
                 'El Greco': 'El Greco Street',
                 '8202 SE Flavel St, Portland, OR 97266': 'SE Flavel Street',
                 'Cervantes': 'Cervantes Street',
                 'Touchstone': 'Touchstone Road',
                 'Polonius': 'Polonius Street',
                 'Spinosa': 'Spinosa Road',
+                'Boticelli': 'Boticelli Street',
+                'Southwest Wheatland': 'Southwest Wheatland Road',
+                'Hotspur': 'Hotspur Road',
+                'Southwest Miami': 'Southwest Miami Street',
+                'Wheatherstone': 'Wheatherstone Street',
+                'Southeast Fieldcrest': 'Southeast Fieldcrest Road'    
                }
 
 def is_street_name(elem):
