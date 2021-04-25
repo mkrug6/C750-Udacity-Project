@@ -1,6 +1,9 @@
 #The map file to use
 osmfile = "wlinn_sample"
 
+#The SQLite database name. Used in createdb.py
+sqlite_file = 'wlinn.db'
+
 #Here you can change what you want your CSV files to be named
 NODES_PATH = "nodes.csv"
 NODE_TAGS_PATH = "nodes_tags.csv"
