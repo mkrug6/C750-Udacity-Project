@@ -11,16 +11,16 @@ The full file is available as wlinn.rar. Note that this is a RAR file. You must 
 
 ## The repository contains the following files:
 
-1.C750.ipynb: Jupyter notebook containing the results and the code used to audit, clean, and process the Open Street Map file.
-2.SQL Commands.txt: list of queries used in this project
-3.audit.py: the audit functions used in this project
-4.create_csvs.py: this script creates the CSV from the sample dataset
-5.link_file.txt: a file containing a link to the target map area
-6.main.py: runs the audit, cleaning, and CSV creation functions
-7.config.py: contains global variables such as map file location and more
-8.map_cleaning.py: the map cleaning functions used in this project
-9.report.pdf: PDF document containing answers to rubric questions
-10. sample_generator.py: script to turn the full OSM into a sample file. Not needed but exists as FYI
-11. schema.py: schema used to validate the database before writing it in a CSV file
-12. wlinn: sample file used for this project. This is what the scripts will reference
-13. wlinn.rar: compressed file of the full data. Not needed for the project. Used purely for the curious and exists as FYI
+* C750.ipynb: Jupyter notebook containing the results and the code used to audit, clean, and process the Open Street Map file.
+* SQL Commands.txt: list of queries used in this project
+* audit.py: the audit functions used in this project
+* create_csvs.py: this script creates the CSV from the sample dataset
+* link_file.txt: a file containing a link to the target map area
+* main.py: runs the audit, cleaning, and CSV creation functions
+* config.py: contains global variables such as map file location and more
+* map_cleaning.py: the map cleaning functions used in this project
+* report.pdf: PDF document containing answers to rubric questions
+* sample_generator.py: script to turn the full OSM into a sample file. Not needed but exists as FYI
+* schema.py: schema used to validate the database before writing it in a CSV file
+* wlinn: sample file used for this project. This is what the scripts will reference
+* wlinn.rar: compressed file of the full data. Not needed for the project. Used purely for the curious and exists as FYI
