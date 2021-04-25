@@ -16,3 +16,4 @@ clean_map(osmfile)
 process_map(osmfile, validate=False)
 
 #This script creates the database file from createdb.py. Must have sqlite3 to use.
+create_db()
