@@ -2,90 +2,27 @@ import csv
 import codecs
 import re
 import xml.etree.cElementTree as ET
+from schema import *
+from config import *
 import cerberus
-#import schema
 
-theschema = {
-    'node': {
-        'type': 'dict',
-        'schema': {
-            'id': {'required': True, 'type': 'integer', 'coerce': int},
-            'lat': {'required': True, 'type': 'float', 'coerce': float},
-            'lon': {'required': True, 'type': 'float', 'coerce': float},
-            'user': {'required': True, 'type': 'string'},
-            'uid': {'required': True, 'type': 'integer', 'coerce': int},
-            'version': {'required': True, 'type': 'string'},
-            'changeset': {'required': True, 'type': 'integer', 'coerce': int},
-            'timestamp': {'required': True, 'type': 'string'}
-        }
-    },
-    'node_tags': {
-        'type': 'list',
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'id': {'required': True, 'type': 'integer', 'coerce': int},
-                'key': {'required': True, 'type': 'string'},
-                'value': {'required': True, 'type': 'string'},
-                'type': {'required': True, 'type': 'string'}
-            }
-        }
-    },
-    'way': {
-        'type': 'dict',
-        'schema': {
-            'id': {'required': True, 'type': 'integer', 'coerce': int},
-            'user': {'required': True, 'type': 'string'},
-            'uid': {'required': True, 'type': 'integer', 'coerce': int},
-            'version': {'required': True, 'type': 'string'},
-            'changeset': {'required': True, 'type': 'integer', 'coerce': int},
-            'timestamp': {'required': True, 'type': 'string'}
-        }
-    },
-    'way_nodes': {
-        'type': 'list',
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'id': {'required': True, 'type': 'integer', 'coerce': int},
-                'node_id': {'required': True, 'type': 'integer', 'coerce': int},
-                'position': {'required': True, 'type': 'integer', 'coerce': int}
-            }
-        }
-    },
-    'way_tags': {
-        'type': 'list',
-        'schema': {
-            'type': 'dict',
-            'schema': {
-                'id': {'required': True, 'type': 'integer', 'coerce': int},
-                'key': {'required': True, 'type': 'string'},
-                'value': {'required': True, 'type': 'string'},
-                'type': {'required': True, 'type': 'string'}
-            }
-        }
-    }
-}
-
-OSM_PATH = "osmfile"
-corrected_names = {} 
-NODES_PATH = "nodes.csv"
-NODE_TAGS_PATH = "nodes_tags.csv"
-WAYS_PATH = "ways.csv"
-WAY_NODES_PATH = "ways_nodes.csv"
-WAY_TAGS_PATH = "ways_tags.csv"
+"""
+This purpose of this file is to create the CSV files that will later be imported
+into the SQLite database. It takes the values from the corrected_names dictionary that was
+created from map_cleaning.py and uses the corrected value to create XML tags for 
+our CSV files. These CSV files will later be used to create the SQLite database.
+"""
 
 LOWER_COLON = re.compile(r'^([a-z]|_)+:([a-z]|_)+')
 PROBLEMCHARS = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 
-# Make sure the fields order in the csvs matches the column order in the sql table schema
-NODE_FIELDS = ['id', 'lat', 'lon', 'user', 'uid', 'version', 'changeset', 'timestamp']
-NODE_TAGS_FIELDS = ['id', 'key', 'value', 'type']
-WAY_FIELDS = ['id', 'user', 'uid', 'version', 'changeset', 'timestamp']
-WAY_TAGS_FIELDS = ['id', 'key', 'value', 'type']
-WAY_NODES_FIELDS = ['id', 'node_id', 'position']
-
 def correct_element(v):
+    """
+    The purpose of this is to check and see if a value has been corrected.
+    If the value has been corrected, it will insert the corrected name
+    instead of the incorrect name.
+    """
+    
     if v in corrected_names:
         correct_value = corrected_names[v]
     else:
@@ -101,6 +38,7 @@ def shape_element(element, node_attr_fields=NODE_FIELDS, way_attr_fields=WAY_FIE
     way_nodes = []
     tags = []  # Handle secondary tags the same way for both node and way elements
 
+    #creates the node tags in the CSV file
     if element.tag == 'node':
         node_attribs['id'] = element.attrib['id']
         node_attribs['user'] = element.attrib['user']
@@ -111,6 +49,7 @@ def shape_element(element, node_attr_fields=NODE_FIELDS, way_attr_fields=WAY_FIE
         node_attribs['timestamp'] = element.attrib['timestamp']
         node_attribs['changeset'] = element.attrib['changeset']
         
+        #creates the sub tags within the node element
         for node in element:
             tag_dict = {}
             tag_dict['id'] = element.attrib['id']
@@ -123,7 +62,7 @@ def shape_element(element, node_attr_fields=NODE_FIELDS, way_attr_fields=WAY_FIE
                 tag_dict['key'] = node.attrib['k']
                 tag_dict['value'] = correct_element(node.attrib['v'])
             tags.append(tag_dict)
-            
+    #creates the way tags       
     elif element.tag == 'way':
         way_attribs['id'] = element.attrib['id']
         way_attribs['user'] = element.attrib['user']
@@ -161,6 +100,7 @@ def shape_element(element, node_attr_fields=NODE_FIELDS, way_attr_fields=WAY_FIE
 # ================================================== #
 #               Helper Functions                     #
 # ================================================== #
+
 def get_element(osm_file, tags=('node', 'way', 'relation')):
     """Yield element if it is the right type of tag"""
 
@@ -172,7 +112,13 @@ def get_element(osm_file, tags=('node', 'way', 'relation')):
             root.clear()
 
 def validate_element(element, validator, schema=theschema):
-    """Raise ValidationError if element does not match schema"""
+
+    """
+        Raise ValidationError if element does not match schema.
+        Note that setting validate to true will significantly 
+        increase the time to process the map file.
+    """
+    
     if validator.validate(element, schema) is not True:
         field, errors = next(validator.errors.iteritems())
         message_string = "\nElement of type '{0}' has the following errors:\n{1}"
@@ -195,8 +141,14 @@ class UnicodeDictWriter(csv.DictWriter, object):
 # ================================================== #
 #               Main Function                        #
 # ================================================== #
+
 def process_map(file_in, validate):
-    """Iteratively process each XML element and write to csv(s)"""
+    
+    """
+    Iteratively process each XML element and write to csv files.
+    This is the function that actually writes to the files using the above helper
+    functions.
+    """
 
     with codecs.open(NODES_PATH, 'w', encoding="utf-8") as nodes_file, \
     codecs.open(NODE_TAGS_PATH, 'w', encoding="utf-8") as nodes_tags_file, \
